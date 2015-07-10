@@ -8,6 +8,8 @@ Successfully tested with .bisign files generated from DSSignFile.exe included in
 
 Usage: `bisign2bikey bisign_path [bikey_destination]`
 
+You can also drag-n-drop the bisign onto the EXE, the bikey will be created in the same folder.
+
 ---
 
-This project is licensed under the [GNU GPL v3](http://www.tldrlegal.com/l/gpl3). Copyright © 2015 AgentRev
+This project is licensed under the [GNU GPL v3](http://www.tldrlegal.com/l/gpl-3.0). Copyright © 2015 AgentRev
