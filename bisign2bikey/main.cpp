@@ -1,6 +1,6 @@
 // bisign2bikey v1.0
 // Copyright © 2015 AgentRev
-// Licenced under GNU GPL v3
+// Licensed under GNU GPL v3
 
 #include <fstream>
 #include <iostream>
@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 	if (argc < 2)
 	{
 		cout << "Usage: bisign2bikey bisign_path [bikey_destination]" << "\n\n"
-		     << "bisign2bikey v1.0 - Copyright (c) 2015 AgentRev - Licenced under GNU GPL v3" << "\n";
+		     << "bisign2bikey v1.0 - Copyright (c) 2015 AgentRev - Licensed under GNU GPL v3" << "\n";
 		return 1;
 	}
 	else
