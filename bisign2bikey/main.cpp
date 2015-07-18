@@ -1,4 +1,4 @@
-// bisign2bikey v1.0
+// bisign2bikey v1.01
 // Copyright © 2015 AgentRev
 // Licensed under GNU GPL v3
 
@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 	if (argc < 2)
 	{
 		cout << "Usage: bisign2bikey bisign_path [bikey_destination]" << "\n\n"
-		     << "bisign2bikey v1.0 - Copyright (c) 2015 AgentRev - Licensed under GNU GPL v3" << "\n";
+		     << "bisign2bikey v1.01 - Copyright (c) 2015 AgentRev - Licensed under GNU GPL v3" << "\n";
 		return 1;
 	}
 	else
@@ -46,34 +46,22 @@ int main(int argc, char* argv[])
 		return 20;
 	}
 
-	char cRead;
 	string strAuthority;
-	bool bAuthDone = false;
 
-	while (!bAuthDone)
-	{
-		cRead = fsBisign.get();
+	while (fsBisign.peek() != 0 && !fsBisign.eof() && !fsBisign.fail())
+		strAuthority += fsBisign.get();
 
-		if (cRead == 0)
-			bAuthDone = true;
-		else
-			strAuthority += cRead;
-	}
-
-	int iAuthLength = strAuthority.length();
-	int p_cBikeyLen = iAuthLength + BIKEY_LENGTH;
+	int iAuthLen = strAuthority.length();
+	int p_cBikeyLen = iAuthLen + BIKEY_LENGTH;
 	char* p_cBikey = new char[p_cBikeyLen];
 
-	strncpy(p_cBikey, strAuthority.c_str(), iAuthLength);
+	strncpy(p_cBikey, strAuthority.c_str(), iAuthLen);
 
-	int i;
-	for (i = iAuthLength; i < p_cBikeyLen && !fsBisign.eof(); i++)
-	{
-		p_cBikey[i] = cRead;
-		cRead = fsBisign.get();
-	}
+	fsBisign.read(p_cBikey + iAuthLen, BIKEY_LENGTH);
+	streamsize iReadLen = fsBisign.gcount();
+	fsBisign.close();
 
-	if (i < p_cBikeyLen)
+	if (iReadLen < BIKEY_LENGTH)
 	{
 		cout << "Error: File too short" << "\n";
 		return 30;
@@ -92,9 +80,15 @@ int main(int argc, char* argv[])
 	}
 
 	fsBikey.write(p_cBikey, p_cBikeyLen);
+	bool bWriteFail = fsBikey.fail();
 	fsBikey.close();
 
-	cout << "bikey successfully written to \"" << strBikeyDest << "\"" << "\n";
+	if (bWriteFail)
+	{
+		cout << "Error: Problem writing .bikey" << "\n";
+		return 50;
+	}
 
+	cout << "bikey successfully written to \"" << strBikeyDest << "\"" << "\n";
 	return 0;
 }
