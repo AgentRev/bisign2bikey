@@ -12,4 +12,4 @@ You can also drag-n-drop the bisign onto the EXE, the bikey will be created in t
 
 ---
 
-This project is licensed under the [GNU GPL v3](http://www.tldrlegal.com/l/gpl-3.0). Copyright © 2015 AgentRev
+This project is licensed under the [GNU GPL v3](http://tldrlegal.com/l/gpl-3.0). Copyright © 2015 AgentRev
